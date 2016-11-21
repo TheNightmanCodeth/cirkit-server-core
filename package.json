@@ -1,0 +1,27 @@
+{
+  "name": "cirkit_server",
+  "version": "1.0.0",
+  "description": "Cirkit server for cirkit clients in NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheNightmanCodeth/cirkit_server.git"
+  },
+  "keywords": [
+    "cirkit"
+  ],
+  "author": "TheNightman",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TheNightmanCodeth/cirkit_server/issues"
+  },
+  "homepage": "https://github.com/TheNightmanCodeth/cirkit_server#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "redis": "^2.6.3",
+    "sqlite3": "^3.1.8"
+  }
+}
