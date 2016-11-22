@@ -20,7 +20,8 @@ app.post('/cirkit', function(req, res) {
     var push = req.body.msg
     todb.run(push)
     todb.finalize()
-    res.sendStatus(200)
+    res.json({"response":"Success"})
+    console.log("Received push: " +push)
 })
 
 //Listen for connections to /list/ and return list of pushes
