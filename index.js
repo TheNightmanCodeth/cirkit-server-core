@@ -1,3 +1,4 @@
+var os = require('os')
 //Express.js
 var express = require('express')
 var app     = express()
@@ -27,7 +28,7 @@ app.post('/cirkit', function(req, res) {
 
 //Listen for connections to /list/ and return list of pushes
 app.get('/pushes', function(req, res) {
-    db.all("SELECT rowid AS id, data FROM PUSHES", function(err, rows) {
+    db.all("SELECT rowid AS id, push FROM PUSHES", function(err, rows) {
         res.json(rows)
     })
 })
@@ -41,10 +42,24 @@ app.post('/register', function(req, res) {
     console.log("Registered device with ip: " +ip)
 })
 
-function closeDb() {
-    db.close()
-}
+//Listen for connections to /devices and return list of devices
+app.get('/devices', function(req, res) {
+    db.all("SELECT rowid AS id, ip FROM NODES, name FROM NODES", function(err, rows) {
+        res.json(rows)
+    })
+})
 
-app.listen(6969, function() {
-    console.log('Listening on port 6969...')
+var server = app.listen(6969, function() {
+    var interfaces = os.networkInterfaces();
+    var addresses = [];
+    for (var i in interfaces) {
+        for (var i2 in interfaces[i]) {
+            var address = interfaces[i][i2];
+            if (address.family === 'IPv4' && !address.internal) {
+                addresses.push(address.address);
+            }
+        }
+    }    
+
+    console.log('Server IP is ' +addresses +'...');
 })
