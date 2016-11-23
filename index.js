@@ -12,6 +12,8 @@ app.use(bodyParser.json())
 function createTable() {
     console.log('Creating pushes table if not already created...')
     db.run("CREATE TABLE IF NOT EXISTS pushes (data TEXT)")
+    console.log('Creating nodes table if not already created...')
+    db.run("CREATE TABLE IF NOT EXISTS nodes (data TEXT)")
 }
 
 //Listen for connections to /cirkit/ and store msg to sqlite
@@ -29,6 +31,16 @@ app.get('/pushes', function(req, res) {
     db.all("SELECT rowid AS id, data FROM pushes", function(err, rows) {
         res.json(rows)
     })
+})
+
+//Listen for connections to /register and add device IP to devices
+app.post('/register', function(req, res) {
+    var todb = db.prepare("INSERT INTO nodes VALUES (?)")
+    var dev  = req.body.dev
+    todb.run(dev)
+    todb.finalize()
+    res.json({"response":"Success"})
+    console.log("Registered device with ip: " +dev)
 })
 
 function closeDb() {
