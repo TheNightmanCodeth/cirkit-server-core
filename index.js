@@ -11,36 +11,34 @@ app.use(bodyParser.json())
 
 function createTable() {
     console.log('Creating pushes table if not already created...')
-    db.run("CREATE TABLE IF NOT EXISTS pushes (data TEXT)")
+    db.run("CREATE TABLE IF NOT EXISTS PUSHES (push TEXT NOT NULL, device TEXT NOT NULL)")
     console.log('Creating nodes table if not already created...')
-    db.run("CREATE TABLE IF NOT EXISTS nodes (data TEXT)")
+    db.run("CREATE TABLE IF NOT EXISTS NODES (ip TEXT NOT NULL, name TEXT NOT NULL)")
 }
 
 //Listen for connections to /cirkit/ and store msg to sqlite
-app.post('/cirkit', function(req, res) { 
-    var todb = db.prepare("INSERT INTO pushes VALUES (?)")
-    var push = req.body.msg
-    todb.run(push)
-    todb.finalize()
-    res.json({"response":"Success"})
-    console.log("Received push: " +push)
+app.post('/cirkit', function(req, res) {
+    var push = req.body.push
+    var device = req.body.device
+    db.query("INSERT INTO PUSHES (push,device) VALUES (?,?)", [push, device])
+    res.json({"response":"Received push from " +device})
+    console.log("Received push: '" +push +"' from: " +device)
 })
 
 //Listen for connections to /list/ and return list of pushes
 app.get('/pushes', function(req, res) {
-    db.all("SELECT rowid AS id, data FROM pushes", function(err, rows) {
+    db.all("SELECT rowid AS id, data FROM PUSHES", function(err, rows) {
         res.json(rows)
     })
 })
 
 //Listen for connections to /register and add device IP to devices
 app.post('/register', function(req, res) {
-    var todb = db.prepare("INSERT INTO nodes VALUES (?)")
-    var dev  = req.body.dev
-    todb.run(dev)
-    todb.finalize()
-    res.json({"response":"Success"})
-    console.log("Registered device with ip: " +dev)
+    var ip  = req.body.ip
+    var name = req.body.name
+    db.query("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
+    res.json({"response":"Added device '" +name +"' with ip '" +ip +"'"})
+    console.log("Registered device with ip: " +ip)
 })
 
 function closeDb() {
