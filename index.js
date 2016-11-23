@@ -20,7 +20,7 @@ function createTable() {
 app.post('/cirkit', function(req, res) {
     var push = req.body.push
     var device = req.body.device
-    db.query("INSERT INTO PUSHES (push,device) VALUES (?,?)", [push, device])
+    db.run("INSERT INTO PUSHES (push,device) VALUES (?,?)", [push, device])
     res.json({"response":"Received push from " +device})
     console.log("Received push: '" +push +"' from: " +device)
 })
@@ -36,7 +36,7 @@ app.get('/pushes', function(req, res) {
 app.post('/register', function(req, res) {
     var ip  = req.body.ip
     var name = req.body.name
-    db.query("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
+    db.run("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
     res.json({"response":"Added device '" +name +"' with ip '" +ip +"'"})
     console.log("Registered device with ip: " +ip)
 })
