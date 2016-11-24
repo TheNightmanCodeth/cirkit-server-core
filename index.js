@@ -11,9 +11,9 @@ var db      = new sqlite3.Database('db.sqlite3', createTable)
 app.use(bodyParser.json())
 
 function createTable() {
-    console.log('Creating pushes table if not already created...')
+    //console.log('Creating pushes table if not already created...')
     db.run("CREATE TABLE IF NOT EXISTS PUSHES (push TEXT NOT NULL, device TEXT NOT NULL)")
-    console.log('Creating nodes table if not already created...')
+    //console.log('Creating nodes table if not already created...')
     db.run("CREATE TABLE IF NOT EXISTS NODES (ip TEXT NOT NULL, name TEXT NOT NULL)")
 }
 
@@ -44,7 +44,7 @@ app.post('/register', function(req, res) {
 
 //Listen for connections to /devices and return list of devices
 app.get('/devices', function(req, res) {
-    db.all("SELECT rowid AS id, ip FROM NODES, name FROM NODES", function(err, rows) {
+    db.all("SELECT rowid AS id, ip, name FROM NODES", function(err, rows) {
         res.json(rows)
     })
 })
