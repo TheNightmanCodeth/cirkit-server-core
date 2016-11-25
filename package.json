@@ -20,8 +20,13 @@
   },
   "homepage": "https://github.com/TheNightmanCodeth/cirkit_server#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "redis": "^2.6.3",
     "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.4.8",
+    "electron-rebuild": "^1.4.0"
   }
 }

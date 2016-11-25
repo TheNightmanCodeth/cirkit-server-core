@@ -49,7 +49,8 @@ app.get('/devices', function(req, res) {
     })
 })
 
-var server = app.listen(6969, function() {
+var start = function startServer() {
+    var server = app.listen(6969, function() {
     var interfaces = os.networkInterfaces();
     var addresses = [];
     for (var i in interfaces) {
@@ -62,4 +63,11 @@ var server = app.listen(6969, function() {
     }    
 
     console.log('Server IP is ' +addresses +'...');
-})
+    })
+}
+
+module.exports = {
+    start: start
+}
+
+
