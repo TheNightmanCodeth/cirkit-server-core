@@ -9,6 +9,7 @@ var sqlite3 = require('sqlite3').verbose()
 var db      = new sqlite3.Database('db.sqlite3', createTable)
 //Use Express body parser
 app.use(bodyParser.json())
+var notifier = require('node-notifier');
 
 function createTable() {
     //console.log('Creating pushes table if not already created...')
@@ -24,6 +25,10 @@ app.post('/cirkit', function(req, res) {
     db.run("INSERT INTO PUSHES (push,device) VALUES (?,?)", [push, device])
     res.json({"response":"Received push from " +device})
     console.log("Received push: '" +push +"' from: " +device)
+    notifier.notify({
+        'title':'Push received',
+        'message':push
+    });
 })
 
 //Listen for connections to /list/ and return list of pushes

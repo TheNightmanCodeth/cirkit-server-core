@@ -23,6 +23,7 @@
     "body-parser": "^1.15.2",
     "electron-spawn": "^5.0.0",
     "express": "^4.14.0",
+    "node-notifier": "^4.6.1",
     "redis": "^2.6.3",
     "sqlite3": "^3.1.8"
   },
