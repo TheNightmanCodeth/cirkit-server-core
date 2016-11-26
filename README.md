@@ -1,3 +1,3 @@
-![Cirkit logo](http://www.thenightmancodeth.me/cirkit/logo.png)
+![Cirkit logo](res/logo.png)
 # cirkit_server
 Server for cirkit client in nodejs and electrum.
