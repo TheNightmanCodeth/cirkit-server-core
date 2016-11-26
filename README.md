@@ -1,2 +1,2 @@
 # cirkit_server
-Server for cirkit client in nodejs
+Server for cirkit client in nodejs and electrum.
