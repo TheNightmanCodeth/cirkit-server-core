@@ -4,9 +4,11 @@ const window = electron.BrowserWindow;
 const url = require('url');
 const path = require('path');
 var server = require('./server.js');
+var spawn = require('electron-spawn');
 var mainWin = null;
 
 function makeWindow() {
+    console.log('yeet');
     mainWin = new window({
         width: 450,
         height: 200
@@ -24,7 +26,13 @@ function makeWindow() {
 }
 
 function startServer() {
-    server.start;
+    var serve = spawn('./server.js', {detached: true});
+    serve.stderr.on('data', (data) => {
+        console.error(data.toString())
+    })
+    serve.stdout.on('data', (data) => {
+        console.log(data.toString())
+    })
 }
 
 app.on('ready', makeWindow);
