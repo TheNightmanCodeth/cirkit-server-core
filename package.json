@@ -4,7 +4,7 @@
   "description": "Cirkit server for cirkit clients in NodeJS",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js start"
+    "start": ""
   },
   "repository": {
     "type": "git",
