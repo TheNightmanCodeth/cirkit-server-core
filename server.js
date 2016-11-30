@@ -54,6 +54,18 @@ app.get('/devices', function(req, res) {
     })
 })
 
+exports.getNodes = function(callback) {
+  db.serialize(function() {
+    db.all("SELECT rowid AS id, ip, name FROM NODES", function(err, rows) {
+      if (err != null) {
+        console.log(err);
+        callback(err, null);
+      }
+      callback(null, rows);
+    })
+  })
+};
+
 var server = app.listen(6969, function() {
     var interfaces = os.networkInterfaces();
     var addresses = [];
@@ -64,7 +76,9 @@ var server = app.listen(6969, function() {
                 addresses.push(address.address);
             }
         }
-    }    
+    }
 
     console.log('Server IP is ' +addresses +'...');
 })
+
+exports.start = server;

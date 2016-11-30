@@ -4,7 +4,7 @@
   "description": "Cirkit server for cirkit clients in NodeJS",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js start"
   },
   "repository": {
     "type": "git",
@@ -21,14 +21,11 @@
   "homepage": "https://github.com/TheNightmanCodeth/cirkit_server#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "electron-spawn": "^5.0.0",
     "express": "^4.14.0",
     "node-notifier": "^4.6.1",
-    "redis": "^2.6.3",
+    "request": "^2.79.0",
     "sqlite3": "^3.1.8"
   },
   "devDependencies": {
-    "electron-prebuilt": "^1.4.8",
-    "electron-rebuild": "^1.4.0"
   }
 }
