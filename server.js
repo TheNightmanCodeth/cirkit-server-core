@@ -15,7 +15,7 @@ function createTable() {
     //console.log('Creating pushes table if not already created...')
     db.run("CREATE TABLE IF NOT EXISTS PUSHES (push TEXT NOT NULL, device TEXT NOT NULL)")
     //console.log('Creating nodes table if not already created...')
-    db.run("CREATE TABLE IF NOT EXISTS NODES (ip TEXT NOT NULL, name TEXT NOT NULL)")
+    db.run("CREATE TABLE IF NOT EXISTS NODES (ip TEXT NOT NULL UNIQUE, name TEXT NOT NULL UNIQUE)")
 }
 
 module.exports = function() {
@@ -43,9 +43,34 @@ module.exports = function() {
   app.post('/register', function(req, res) {
       var ip  = req.body.ip
       var name = req.body.name
-      db.run("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
-      res.json({"response":"Added device '" +name +"' with ip '" +ip +"'"})
-      console.log("Registered device with ip: " +ip)
+      db.all("SELECT rowid AS id, ip, name FROM NODES", function(err, rows) {
+        if (rows == null) {
+          //There are no devices registered so no need to worry about dupes
+          db.run("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
+          res.json({"response":"Added device '" +name +"' with ip '" +ip +"'"})
+          console.log("Registered device with ip: " +ip)
+        } else {
+          //There are registered devices, make sure this one isn't already registered
+          var isDup = false;
+          for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            if (row.ip == ip) {
+              isDup = true;
+              res.json({"response":"ERROR: Device exists on server"})
+              console.log("Duplicate device not registered")
+            } else if (row.name == name) {
+              isDup = true;
+              res.json({"response":"ERROR: Device exists on server"})
+              console.log("Duplicate device not registered")
+            }
+          }
+          if (!isDup) {
+            db.run("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
+            res.json({"response":"Added device '" +name +"' with ip '" +ip +"'"})
+            console.log("Registered device with ip: " +ip)
+          }
+        }
+      });
   })
 
   //Listen for connections to /devices and return list of devices
