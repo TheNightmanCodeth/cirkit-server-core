@@ -10,7 +10,11 @@ switch (process.argv[2]) {
   case 'push':
     msg = process.argv[3];
     dev = process.argv[4];
-    sendPush(msg, dev);
+    console.log(msg);
+    db.each("SELECT rowid AS id, ip, name FROM NODES WHERE id=" +dev, function(err, row) {
+      sendPush("The game", row.ip);
+      console.log(row.ip);
+    })
     break;
   case 'devices':
     listDevices();
