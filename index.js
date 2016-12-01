@@ -12,7 +12,7 @@ switch (process.argv[2]) {
     dev = process.argv[4];
     console.log(msg);
     db.each("SELECT rowid AS id, ip, name FROM NODES WHERE id=" +dev, function(err, row) {
-      sendPush("The game", row.ip);
+      sendPush(msg, row.ip);
       console.log(row.ip);
     })
     break;
@@ -39,7 +39,7 @@ switch (process.argv[2]) {
 function listDevices() {
   db.all("SELECT rowid AS id, ip, name FROM NODES", function(err, rows) {
       for (var i = 0; i < rows.length; i++) {
-        console.log(rows[i].id +': ' +rows[i].name);
+        console.log(rows[i].id +': ' +rows[i].name +' (' +rows[i].ip +')');
       }
       process.exit();
   });
