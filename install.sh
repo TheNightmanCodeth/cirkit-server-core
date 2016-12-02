@@ -50,6 +50,8 @@ get_deps
 get_repo
 #Move scripts around
 install
+#Remove tmp directory
+cd .. && sudo rm -rf cirkit-tmp/
 #All finished!
 echo ':::Cirkit is installed!'
 exit 1
