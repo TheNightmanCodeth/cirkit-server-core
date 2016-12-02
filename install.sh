@@ -41,7 +41,10 @@ install() {
 	echo ':::Moving files around...'
 	sudo mkdir /usr/bin/cirkit-core && sudo cp cirkit-core/* /usr/bin/cirkit-core/ && sudo cp -R node_modules/ /usr/bin/cirkit-core/
 	echo ':::Adding PATH variables...'
+	#Add /usr/bin/cirkit-core to path 
 	echo 'PATH=/usr/bin/cirkit-core:$PATH' > ~/.profile
+	#'Refresh' the PATH
+	source ~/.profile
 }
 
 #Install dependencies
