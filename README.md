@@ -7,7 +7,7 @@ One-liner:
 >curl -sL https://raw.githubusercontent.com/TheNightmanCodeth/cirkit-server-core/master/install.sh | sudo -E bash -
 
 Or, if you'd rather not pipe to bash with root:
->curl -sL https://raw.githubusercontent.com/TheNightmanCodeth/cirkit-server-core/master/install.sh
+>curl -sL https://raw.githubusercontent.com/TheNightmanCodeth/cirkit-server-core/master/install.sh  
 >./install.sh
 
 # Installing (Everything else (Experimental))
