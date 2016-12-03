@@ -39,12 +39,14 @@ install() {
 	echo ':::Running npm install...'
 	npm install
 	echo ':::Moving files around...'
-	sudo mkdir /usr/bin/cirkit-core && sudo cp cirkit-core/* /usr/bin/cirkit-core/ && sudo cp -R node_modules/ /usr/bin/cirkit-core/
+	sudo mkdir ~/Documents/cirkit-core && sudo cp cirkit-core/* ~/Documents/cirkit-core/ && sudo cp -R node_modules/ ~/Documents/cirkit-core/
 	echo ':::Adding PATH variables...'
-	#Add /usr/bin/cirkit-core to path 
-	echo 'PATH=/usr/bin/cirkit-core:$PATH' > ~/.profile
+	#Add ~/cirkit-core to path 
+	echo 'PATH=~/Documents/cirkit-core:$PATH' > ~/.profile
 	#'Refresh' the PATH
 	source ~/.profile
+	#Remove the temp directory
+	cd .. && sudo rm -rf cirkit-tmp/
 }
 
 #Install dependencies
@@ -53,8 +55,6 @@ get_deps
 get_repo
 #Move scripts around
 install
-#Remove tmp directory
-cd .. && sudo rm -rf cirkit-tmp/
 #All finished!
 echo ':::Cirkit is installed!'
 exit 1
