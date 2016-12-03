@@ -44,8 +44,8 @@ function listDevices() {
       if (err == null) {
       	for (var i = 0; i < rows.length; i++) {
             console.log(rows[i].id +': ' +rows[i].name +' (' +rows[i].ip +')');
-	    process.exit();
       	}
+	process.exit();
       }
       console.log('No registered devices!');
       process.exit();

@@ -31,14 +31,14 @@ module.exports = function() {
           'title':'Push received',
           'message':push
       });
-  })
+  });
 
   //Listen for connections to /list/ and return list of pushes
   app.get('/pushes', function(req, res) {
       db.all("SELECT rowid AS id, push FROM PUSHES", function(err, rows) {
           res.json(rows)
       })
-  })
+  });
 
   //Listen for connections to /register and add device IP to devices
   app.post('/register', function(req, res) {
@@ -72,7 +72,7 @@ module.exports = function() {
           }
         }
       });
-  })
+  });
 
   //Listen for connections to /devices and return list of devices
   app.get('/devices', function(req, res) {
@@ -80,7 +80,7 @@ module.exports = function() {
           res.json(rows)
           //console.log(rows);
       })
-  })
+  });
 
   app.listen(6969, function() {
       var interfaces = os.networkInterfaces();
@@ -95,5 +95,5 @@ module.exports = function() {
       }
 
       console.log('Server IP is ' +addresses +'...');
-  })
+  });
 }
