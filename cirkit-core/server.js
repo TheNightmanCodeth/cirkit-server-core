@@ -11,6 +11,8 @@ var db      = new sqlite3.Database(path.join(__dirname, 'db.sqlite3'), createTab
 //Use Express body parser
 app.use(bodyParser.json())
 var notifier = require('node-notifier');
+//For copying push to clipboard
+var ncp = require('copy-paste');
 
 function createTable() {
     //console.log('Creating pushes table if not already created...')
@@ -30,6 +32,9 @@ function createTable() {
           'title':'Push received',
           'message':push
       });
+      ncp.copy(push, function() {
+        console.log("Copied to cb");
+      })
   });
 
   //Listen for connections to /list/ and return list of pushes
