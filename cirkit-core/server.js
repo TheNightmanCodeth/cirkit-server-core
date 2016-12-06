@@ -19,7 +19,6 @@ function createTable() {
     db.run("CREATE TABLE IF NOT EXISTS NODES (ip TEXT NOT NULL UNIQUE, name TEXT NOT NULL UNIQUE)")
 }
 
-module.exports = function() {
   //Listen for connections to /cirkit/ and store msg to sqlite
   app.post('/cirkit', function(req, res) {
       var push = req.body.push
@@ -96,4 +95,3 @@ module.exports = function() {
 
       console.log('Server IP is ' +addresses +'...');
   });
-}

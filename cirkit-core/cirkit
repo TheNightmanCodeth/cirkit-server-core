@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-var server = require('./server.js');
+var fs = require('fs'), out = fs.openSync('./out.log', 'a'),
+    err = fs.openSync('./out.log', 'a');
+var spawn = require('child_process').spawn;
 var client = require('./client.js');
 var path = require('path');
 
@@ -25,7 +27,30 @@ switch (process.argv[2]) {
   case 'server':
     var task = process.argv[3];
     if (task == 'start') {
-      var start = server();
+      var child = spawn('node', ['server.js'], {
+        stdio: ['ignore', out, err ],
+        detached: true
+      });
+      //Write process id to file for killing later
+      fs.writeFile(".pid", child.pid, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("PID file saved");
+      })
+    } else if (task == 'stop') {
+      fs.exists('.pid', function(exists) {
+        if (exists) {
+          fs.readFile('.pid', 'utf8', function(err,data) {
+            if (err) {
+              console.log('No server process found!');
+              return console.log(err);
+            }
+            console.log('Stopping server...');
+            process.kill(data);
+          });
+        }
+      });
     }
     break;
   case ('help'||'--help'):
