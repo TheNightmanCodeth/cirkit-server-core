@@ -6,7 +6,7 @@ get_deps() {
 	else
 		echo ':::Git is not installed, installing...'
 		sudo apt install -y git
-		echo ':::Installed git, continuing...' 
+		echo ':::Installed git, continuing...'
 	fi
 	#Node
 	if hash node 2>/dev/null; then
@@ -41,10 +41,12 @@ install() {
 	echo ':::Moving files around...'
 	sudo mkdir ~/Documents/cirkit-core && sudo cp cirkit-core/* ~/Documents/cirkit-core/ && sudo cp -R node_modules/ ~/Documents/cirkit-core/
 	echo ':::Adding PATH variables...'
-	#Add ~/cirkit-core to path 
+	#Add ~/cirkit-core to path
 	echo 'PATH=~/Documents/cirkit-core:$PATH' > ~/.profile
 	#'Refresh' the PATH
 	source ~/.profile
+	#Assuming user uses bash and not zsh TODO:
+	echo 'source ~/.profile' > ~/.bashrc
 	#Remove the temp directory
 	cd .. && sudo rm -rf cirkit-tmp/
 }
