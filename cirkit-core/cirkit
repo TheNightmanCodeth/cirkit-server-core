@@ -2,9 +2,12 @@
 var spawn = require('child_process').spawn;
 var client = require('./client.js');
 var path = require('path');
-var fs = require('fs'), out = fs.openSync(path.join(__dirname, 'out.log'), 'a'),
-    err = fs.openSync(path.join(__dirname, 'out.log'), 'a');
-
+var fs = require('fs');
+var os = require('os');
+if (os.platform != 'darwin') {
+  var out = fs.openSync(path.join(__dirname, 'out.log'), 'a'),
+      err = fs.openSync(path.join(__dirname, 'out.log'), 'a');
+}
 //SQLite database
 var sqlite3 = require('sqlite3').verbose()
 var db      = new sqlite3.Database(path.join(__dirname, 'db.sqlite3'));
@@ -27,10 +30,17 @@ switch (process.argv[2]) {
   case 'server':
     var task = process.argv[3];
     if (task == 'start') {
-      var child = spawn('node', [path.join(__dirname, 'server.js')], {
-        stdio: ['ignore', out, err ],
-        detached: true
-      });
+      if (os.platform() === 'darwin') {
+        var child = spawn('node', [path.join(__dirname, 'server.js')], {
+          stdio: ['ignore'],
+          detached: true
+        });
+      } else {
+        var child = spawn('node', [path.join(__dirname, 'server.js')], {
+          stdio: ['ignore', out, err ],
+          detached: true
+        });
+      }
       //Write process id to file for killing later
       fs.writeFile(path.join(__dirname, ".pid"), child.pid, function(err) {
         if (err) {

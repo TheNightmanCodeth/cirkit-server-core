@@ -39,7 +39,7 @@ install() {
 	echo ':::Running npm install...'
 	npm install
 	echo ':::Moving files around...'
-	sudo mkdir ~/Documents/cirkit-core && sudo cp cirkit-core/* ~/Documents/cirkit-core/ && sudo cp -R node_modules/ ~/Documents/cirkit-core/
+	sudo mkdir ~/Documents/cirkit-core && sudo cp cirkit-core/* ~/Documents/cirkit-core/ && mkdir ~/Documents/cirkit-core/node_modules/ && sudo cp -R node_modules/* ~/Documents/cirkit-core/node_modules/
 	echo ':::Adding PATH variables...'
 	#Add ~/cirkit-core to path
 	echo 'PATH=~/Documents/cirkit-core:$PATH' > ~/.profile
