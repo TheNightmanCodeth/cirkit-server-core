@@ -4,7 +4,7 @@ var client = require('./client.js');
 var path = require('path');
 var fs = require('fs');
 var os = require('os');
-if (os.platform != 'darwin') {
+if (os.platform() != 'darwin') {
   var out = fs.openSync(path.join(__dirname, 'out.log'), 'a'),
       err = fs.openSync(path.join(__dirname, 'out.log'), 'a');
 }
