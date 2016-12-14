@@ -87,16 +87,4 @@ function createTable() {
   });
 
   app.listen(6969, function() {
-      var interfaces = os.networkInterfaces();
-      var addresses = [];
-      for (var i in interfaces) {
-          for (var i2 in interfaces[i]) {
-              var address = interfaces[i][i2];
-              if (address.family === 'IPv4' && !address.internal) {
-                  addresses.push(address.address);
-              }
-          }
-      }
-
-      console.log('Server IP is ' +addresses +'...');
   });

@@ -30,17 +30,10 @@ switch (process.argv[2]) {
   case 'server':
     var task = process.argv[3];
     if (task == 'start') {
-      if (os.platform() === 'darwin') {
-        var child = spawn('node', [path.join(__dirname, 'server.js')], {
-          stdio: ['ignore'],
-          detached: true
-        });
-      } else {
         var child = spawn('node', [path.join(__dirname, 'server.js')], {
           stdio: ['ignore', out, err ],
           detached: true
         });
-      }
       //Write process id to file for killing later
       fs.writeFile(path.join(__dirname, ".pid"), child.pid, function(err) {
         if (err) {
@@ -48,6 +41,18 @@ switch (process.argv[2]) {
         }
         console.log("PID file saved");
       })
+      var interfaces = os.networkInterfaces();
+      var addresses = [];
+      for (var i in interfaces) {
+          for (var i2 in interfaces[i]) {
+              var address = interfaces[i][i2];
+              if (address.family === 'IPv4' && !address.internal) {
+                  addresses.push(address.address);
+              }
+          }
+      }
+
+      console.log('Server IP is ' +addresses +'...');
     } else if (task == 'stop') {
       fs.exists(path.join(__dirname, ".pid"), function(exists) {
         if (exists) {
