@@ -29,7 +29,7 @@ function createTable() {
       res.json({"response":"Received push from " +device})
       console.log("Received push: '" +push +"' from: " +device)
       notifier.notify({
-          'title':'Push received',
+          'title':'Push received from: ' +device,
           'message':push
       });
       ncp.copy(push, function() {
