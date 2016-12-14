@@ -49,6 +49,8 @@ install() {
 	echo 'source ~/.profile' > ~/.bashrc
 	#Remove the temp directory
 	cd .. && sudo rm -rf cirkit-tmp/
+	#apply permissions to folder
+	sudo chmod -R 777 ~/Documents/cirkit-core/
 }
 
 #Install dependencies
