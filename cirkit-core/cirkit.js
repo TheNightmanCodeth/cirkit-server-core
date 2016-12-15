@@ -50,6 +50,7 @@ switch (process.argv[2]) {
       }
 
       console.log('Server IP is ' +addresses +'...');
+      console.log('Press CTRL+C to run in background...');
     } else if (task == 'stop') {
       fs.exists(path.join(home, ".pid"), function(exists) {
         if (exists) {
