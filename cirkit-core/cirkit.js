@@ -4,11 +4,12 @@ var client = require('./client.js');
 var path = require('path');
 var fs = require('fs');
 var os = require('os');
-var out = fs.openSync(path.join(__dirname, 'out.log'), 'a'),
-    err = fs.openSync(path.join(__dirname, 'out.log'), 'a');
+var home = os.homedir();
+var out = fs.openSync(path.join(home, '.cirkit.log'), 'a'),
+    err = fs.openSync(path.join(home, '.cirkit.log'), 'a');
 //SQLite database
 var sqlite3 = require('sqlite3').verbose()
-var db      = new sqlite3.Database(path.join(__dirname, 'db.sqlite3'));
+var db      = new sqlite3.Database(path.join(home, '.cirkitdb.sqlite3'));
 
 switch (process.argv[2]) {
   case 'push':
@@ -26,12 +27,12 @@ switch (process.argv[2]) {
   case 'server':
     var task = process.argv[3];
     if (task == 'start') {
-        var child = spawn('node', [path.join(__dirname, 'server.js')], {
-          stdio: ['ignore', out, err ],
-          detached: true
-        });
+      var child = spawn('node', [path.join(__dirname, 'server.js')], {
+        stdio: ['ignore', out, err ],
+        detached: true
+      });
       //Write process id to file for killing later
-      fs.writeFile(path.join(__dirname, ".pid"), child.pid, function(err) {
+      fs.writeFile(path.join(home, ".pid"), child.pid, function(err) {
         if (err) {
           return console.log(err);
         }
@@ -50,9 +51,9 @@ switch (process.argv[2]) {
 
       console.log('Server IP is ' +addresses +'...');
     } else if (task == 'stop') {
-      fs.exists(path.join(__dirname, ".pid"), function(exists) {
+      fs.exists(path.join(home, ".pid"), function(exists) {
         if (exists) {
-          fs.readFile(path.join(__dirname, ".pid"), 'utf8', function(err,data) {
+          fs.readFile(path.join(home, ".pid"), 'utf8', function(err,data) {
             if (err) {
               console.log('No server process found!');
               return console.log(err);

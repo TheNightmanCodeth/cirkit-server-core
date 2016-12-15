@@ -5,9 +5,10 @@ var app     = express()
 //For parsing json requests
 var bodyParser = require('body-parser')
 var path = require('path');
+var home = os.homedir();
 //SQLite database
 var sqlite3 = require('sqlite3').verbose()
-var db      = new sqlite3.Database(path.join(__dirname, 'db.sqlite3'), createTable)
+var db      = new sqlite3.Database(path.join(home, 'db.sqlite3'), createTable)
 //Use Express body parser
 app.use(bodyParser.json())
 var notifier = require('node-notifier');
