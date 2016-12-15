@@ -1,4 +1,6 @@
 *.sqlite3
 node_modules/
-cirkit_core/*.log
-cirkit_core/.pid
+*.log
+.pid
+*~
+.pid
