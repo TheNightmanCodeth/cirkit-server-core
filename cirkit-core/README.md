@@ -1,5 +1,5 @@
-[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/cirkit)
-# cirkit_server
+[![NPM](https://nodei.co/npm/cirkit.png)](https://npmjs.org/package/cirkit)
+# Cirkit Server Core
 Server for cirkit client in nodejs
 
 # Installing
