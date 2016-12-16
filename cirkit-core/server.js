@@ -55,6 +55,10 @@ function createTable() {
           db.run("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
           res.json({"response":"Added device '" +name +"' with ip '" +ip +"'"})
           console.log("Registered device with ip: " +ip)
+	  notifier.notify({
+		  'title':'Registered new device',
+		  'message':name
+	  });
         } else {
           //There are registered devices, make sure this one isn't already registered
           var isDup = false;
@@ -74,6 +78,10 @@ function createTable() {
             db.run("INSERT INTO NODES (ip,name) VALUES (?,?)", [ip,name])
             res.json({"response":"Added device '" +name +"' with ip '" +ip +"'"})
             console.log("Registered device with ip: " +ip)
+	    notifier.notify({
+	      'title':'Registered new device',
+	      'message':name
+	    });
           }
         }
       });
