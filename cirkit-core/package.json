@@ -1,6 +1,6 @@
 {
   "name": "cirkit",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Cirkit core. CLI only!!",
   "main": "cirkit.js",
   "repository": {
@@ -26,5 +26,8 @@
     "node-notifier": "^4.6.1",
     "request": "^2.79.0",
     "sqlite3": "^3.1.8"
+  },
+  "directories": {
+    "man":"./doc/man"
   }
 }

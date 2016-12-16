@@ -66,8 +66,10 @@ switch (process.argv[2]) {
       });
     }
     break;
-  case ('help'||'--help'):
-    console.log('Cirkit CLI client----------');
+  case ('--help'):
+  case ('help'):
+  case ('-h'):
+    console.log('Cirkit CLI client==================================');
     console.log('Usage: "cirkit push "message" device"');
     console.log('Get devices: "cirkit devices"');
     console.log('Start/Stop server: "cirkit server start/stop"');
