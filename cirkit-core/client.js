@@ -11,7 +11,7 @@ exports.send = function (msg, sendTo) {
 }
 
 exports.register = function(server, ip, name) {
-  request.post('http://' +server +':6969/',
+  request.post('http://' +server +':6969/register',
     {json: {ip: ip, name: name}},
     function(error, response, body) {
       if (!error && response.statusCode == 200) {
