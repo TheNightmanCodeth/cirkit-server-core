@@ -108,7 +108,7 @@ function registerWithServer(server, name) {
   }
 
   thisIP = addresses[0];
-  client.register(server, ip, name);
+  client.register(server, thisIP, name);
 }
 
 function sendPush(msg, ip) {
