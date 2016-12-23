@@ -1,6 +1,6 @@
 {
   "name": "cirkit",
-  "version": "0.0.14",
+  "version": "1.0.0",
   "description": "Cirkit core. CLI only!!",
   "main": "cirkit.js",
   "repository": {

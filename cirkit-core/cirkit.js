@@ -98,6 +98,7 @@ function listDevices() {
 }
 
 function registerWithServer(server, name) {
+  var interfaces = os.networkInterfaces();
   var addresses = [];
   for (var i in interfaces) {
       for (var i2 in interfaces[i]) {
@@ -109,6 +110,7 @@ function registerWithServer(server, name) {
   }
 
   thisIP = addresses[0];
+  console.log(thisIP);
   client.register(server, thisIP, name);
 }
 
