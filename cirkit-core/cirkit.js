@@ -25,6 +25,7 @@ switch (process.argv[2]) {
     server = process.argv[3];
     name = process.argv[4];
     registerWithServer(server, name);
+    break;
   case 'devices':
     listDevices();
     break;
