@@ -21,6 +21,10 @@ switch (process.argv[2]) {
       console.log(row.ip);
     })
     break;
+  case 'register':
+    server = process.argv[3];
+    name = process.argv[4];
+    registerWithServer(server, name);
   case 'devices':
     listDevices();
     break;
@@ -90,6 +94,21 @@ function listDevices() {
       console.log('No registered devices!');
       process.exit();
   });
+}
+
+function registerWithServer(server, name) {
+  var addresses = [];
+  for (var i in interfaces) {
+      for (var i2 in interfaces[i]) {
+          var address = interfaces[i][i2];
+          if (address.family === 'IPv4' && !address.internal) {
+              addresses.push(address.address);
+          }
+      }
+  }
+
+  thisIP = addresses[0];
+  client.register(server, ip, name);
 }
 
 function sendPush(msg, ip) {
