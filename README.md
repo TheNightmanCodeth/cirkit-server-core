@@ -1,7 +1,8 @@
-[![NPM](https://nodei.co/npm/cirkit.png)](https://npmjs.org/package/cirkit)  
+Repo for Cirkit central server. Python WIP!  
 
 # Installing
->sudo npm install -g cirkit
+`COMING SOON(:`
+`sudo snap install cirkit-server`
 
 # Usage
 Register device with server (should auto-pair on first start, otherwise choose menu>set IP) 
