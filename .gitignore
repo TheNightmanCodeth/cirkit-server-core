@@ -1,6 +1,2 @@
-*.sqlite3
-node_modules/
-*.log
-.pid
-*~
-.pid
+*.db
+*.pyc
