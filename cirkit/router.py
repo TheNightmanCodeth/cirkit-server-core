@@ -2,6 +2,11 @@ import os
 from flask import Flask, request, jsonify, g
 from cirkit import app, db, auth
 from cirkit import models, auth_routes
+import gi
+gi.require_version('Notify', '0.7')
+from gi.repository import Notify
+
+Notify.init("Cirkit")
 
 def succeed_json(msg):
 	return jsonify(response="SUCCESS", details=msg)
@@ -9,12 +14,17 @@ def succeed_json(msg):
 def error_json(msg):
 	return jsonify(response="ERROR", details=msg)
 
+def notify(title, body):
+	noti = Notify.Notification.new(title, body)
+	noti.show()
+
 # Push Endpoints
 @app.route('/msg', methods=['POST'])
 def string_push():
     new_push = models.StringPush(request.remote_addr, request.json['msg'])
     db.session.add(new_push)
     db.session.commit()
+    notify("Cirkit", request.json['msg'])
     return succeed_json("Push received")
 
 def is_img(filename):
@@ -32,6 +42,7 @@ def img_push():
 		new_push = models.ImagePush(request.remote_addr, path)
 		db.session.add(new_push)
 		db.session.commit()
+		notify("Cirkit", "File received: " +file.filename)
 		return succeed_json("Image push received from: " +request.remote_addr)
 	else:
 		return error_json("File invalid")
