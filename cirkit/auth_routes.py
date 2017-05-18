@@ -25,7 +25,7 @@ def register_device():
 	nickname = request.json['nickname']
 	if models.Node.query.filter_by(ip = ip).first() is not None:
 		return error_json("Duplicate IP")
-	node = models.Node(ip = ip, nickname="")
+	node = models.Node(ip = ip, nickname = "")
 	node.hash_ip(ip)
 	db.session.add(node)
 	db.session.commit()
@@ -35,3 +35,9 @@ def register_device():
 @auth.login_required
 def test_auth():
 	return router.succeed_json("Auth token valid")
+
+@app.route('/auth/devices', methods=['GET'])
+@auth.login_required
+def get_devices():
+	nodes = models.Node.query.all()
+	return jsonify(nodes=nodes, response="SUCCESS")

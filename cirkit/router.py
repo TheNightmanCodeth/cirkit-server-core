@@ -15,17 +15,18 @@ def error_json(msg):
 	return jsonify(response="ERROR", details=msg)
 
 def notify(title, body):
-	noti = Notify.Notification.new(title, body)
+	noti = Notify.Notification.new(title, body, 'jockey')
 	noti.show()
 
 # Push Endpoints
 @app.route('/msg', methods=['POST'])
 def string_push():
-    new_push = models.StringPush(request.remote_addr, request.json['msg'])
-    db.session.add(new_push)
-    db.session.commit()
-    notify("Cirkit", request.json['msg'])
-    return succeed_json("Push received")
+	app.logger.info(request.json)
+	new_push = models.StringPush(request.remote_addr, request.json['msg'])
+	db.session.add(new_push)
+	db.session.commit()
+	notify("Cirkit", request.json['msg'])
+	return succeed_json("Push received")
 
 def is_img(filename):
     return '.' in filename and \
@@ -42,7 +43,20 @@ def img_push():
 		new_push = models.ImagePush(request.remote_addr, path)
 		db.session.add(new_push)
 		db.session.commit()
-		notify("Cirkit", "File received: " +file.filename)
+		notify("Cirkit", "File received: " +file.path)
 		return succeed_json("Image push received from: " +request.remote_addr)
 	else:
 		return error_json("File invalid")
+
+@app.route('/file', methods=['POST'])
+def file_push():
+	if 'file' not in request.files:
+		return error_json("File not received")
+	file = request.files['file']
+	if file:
+		path = os.path.join(app.config['UPLOAD_FOLDER'], 'files', file.filename)
+		file.save(path)
+		new_push = models.FilePush(request.remote_addr, path)
+		db.session.add(new_push)
+		db.session.commit()
+		notify("Cirkit", "File received: " +file.path)

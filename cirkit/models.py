@@ -53,3 +53,15 @@ class ImagePush(db.Model):
 
 	def __repr__(self):
 		return '<ImagePush %r>' % self.img_path
+
+class FilePush(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	sender_ip = db.Column(db.String(length=15), nullable=False)
+	file_path = db.Column(db.String(124), nullable=False)
+
+	def __init__(self, ip, path):
+		self.sender_ip = ip
+		self.file_path = path
+
+	def __repr__(self):
+		return '<ImagePush %r>' % self.file_path

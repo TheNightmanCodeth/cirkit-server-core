@@ -1,0 +1,1 @@
+from gtk.main import MainWindow
