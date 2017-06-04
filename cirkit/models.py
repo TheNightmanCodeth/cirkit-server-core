@@ -42,18 +42,6 @@ class StringPush(db.Model):
     def __repr__(self):
         return '<StringPush %r>' % self.msg_body
 
-class ImagePush(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	sender_ip = db.Column(db.String(length=15), nullable=False)
-	img_path = db.Column(db.String(124), nullable=False)
-
-	def __init__(self, ip, path):
-		self.sender_ip = ip
-		self.img_path = path
-
-	def __repr__(self):
-		return '<ImagePush %r>' % self.img_path
-
 class FilePush(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	sender_ip = db.Column(db.String(length=15), nullable=False)

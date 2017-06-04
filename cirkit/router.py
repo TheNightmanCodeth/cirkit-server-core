@@ -32,26 +32,10 @@ def is_img(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ['gif', 'png', 'jpg', 'jpeg', 'svg']
 
-@app.route('/img', methods=['POST'])
-def img_push():
-	if 'img' not in request.files:
-		return error_json("Image was not received")
-	file = request.files['img']
-	if file and is_img(file.filename):
-		path = os.path.join(app.config['UPLOAD_FOLDER'], 'images', file.filename)
-		file.save(path)
-		new_push = models.ImagePush(request.remote_addr, path)
-		db.session.add(new_push)
-		db.session.commit()
-		notify("Cirkit", "File received: " +file.path)
-		return succeed_json("Image push received from: " +request.remote_addr)
-	else:
-		return error_json("File invalid")
-
 @app.route('/file', methods=['POST'])
-def file_push():
+def img_push():
 	if 'file' not in request.files:
-		return error_json("File not received")
+		return error_json("File was not received")
 	file = request.files['file']
 	if file:
 		path = os.path.join(app.config['UPLOAD_FOLDER'], 'files', file.filename)
@@ -59,4 +43,7 @@ def file_push():
 		new_push = models.FilePush(request.remote_addr, path)
 		db.session.add(new_push)
 		db.session.commit()
-		notify("Cirkit", "File received: " +file.path)
+		notify("Cirkit", "File received: " +file.filename)
+		return succeed_json("File push received from: " +request.remote_addr)
+	else:
+		return error_json("File invalid")
